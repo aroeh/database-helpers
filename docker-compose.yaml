@@ -1,0 +1,62 @@
+networks:
+  mongonet:
+  mssqlnet:
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo-data
+    restart: always
+    networks:
+      - mongonet
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=AzureDiamond
+      - MONGO_INITDB_ROOT_PASSWORD=hunter2
+  
+  mongoapi:
+    image: ${DOCKER_REGISTRY-}mongoapidemo
+    container_name: mongo-api
+    networks:
+      - mongonet
+    build:
+      context: ./MongoDbHelpers
+      dockerfile: Dockerfile
+    ports:
+      - 5197:80
+    depends_on:
+      - mongo
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MONGODB_CONN=mongodb://AzureDiamond:hunter2@mongo:27017
+  
+  mssql:
+    image: mcr.microsoft.com/mssql/server
+    container_name: mssql-data
+    restart: always
+    networks:
+      - mssqlnet
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong@Passw0rd
+  
+  mssqlapi:
+    image: ${DOCKER_REGISTRY-}mssqlapidemo
+    container_name: mssql-api
+    networks:
+      - mssqlnet
+    build:
+      context: ./MsSqlServerHelpers
+      dockerfile: Dockerfile
+    ports:
+      - 5198:80
+    depends_on:
+      - mssql
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MsSqlConn=Persist Security Info=False;User ID=sa;Password=YourStrong@Passw0rd;Initial Catalog=Samples;Server=mssql;Encrypt=True;TrustServerCertificate=True;

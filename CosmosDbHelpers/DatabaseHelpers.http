@@ -1,0 +1,6 @@
+@DatabaseHelpers_HostAddress = http://localhost:5037
+
+GET {{DatabaseHelpers_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
