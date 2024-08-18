@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoDbHelpers", "MongoDbHe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmosDbHelpers", "CosmosDbHelpers\CosmosDbHelpers.csproj", "{B457C1D1-27F3-4621-B644-9CF9A133F85E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSqlServerHelpers", "SqlServerHelpers\MsSqlServerHelpers.csproj", "{4968DBE8-6B2D-481F-997C-8DAFA071E6CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSqlServerHelpers", "MsSqlServerHelpers\MsSqlServerHelpers.csproj", "{22261F4A-896E-4C5B-8818-E5A7E18C7A12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{B457C1D1-27F3-4621-B644-9CF9A133F85E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B457C1D1-27F3-4621-B644-9CF9A133F85E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B457C1D1-27F3-4621-B644-9CF9A133F85E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4968DBE8-6B2D-481F-997C-8DAFA071E6CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4968DBE8-6B2D-481F-997C-8DAFA071E6CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4968DBE8-6B2D-481F-997C-8DAFA071E6CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4968DBE8-6B2D-481F-997C-8DAFA071E6CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22261F4A-896E-4C5B-8818-E5A7E18C7A12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22261F4A-896E-4C5B-8818-E5A7E18C7A12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22261F4A-896E-4C5B-8818-E5A7E18C7A12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22261F4A-896E-4C5B-8818-E5A7E18C7A12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
