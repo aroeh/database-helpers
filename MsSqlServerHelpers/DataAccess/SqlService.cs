@@ -117,7 +117,36 @@ namespace MsSqlServerHelpers.DataAccess
 
                 connection.Open();
 
-                result = command.ExecuteScalar();
+                // create a new transaction on the connection
+                SqlTransaction transaction = connection.BeginTransaction();
+                command.Transaction = transaction;
+
+                try
+                {
+                    // execute the command
+                    result = command.ExecuteScalar();
+
+                    // commit the transaction and store the changes
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        // log the exception here
+
+                        // attempt to rollback the changes
+                        transaction.Rollback();
+                    }
+                    catch (Exception rollbackEx)
+                    {
+                        // log the exception here
+
+                        // if the rollback fails, then handle it
+                        result = 0;
+                    }
+                    result = 0;
+                }
 
                 connection.Close();
             }
@@ -142,7 +171,36 @@ namespace MsSqlServerHelpers.DataAccess
 
                 connection.Open();
 
-                result = command.ExecuteScalar();
+                // create a new transaction on the connection
+                SqlTransaction transaction = connection.BeginTransaction();
+                command.Transaction = transaction;
+
+                try
+                {
+                    // execute the command
+                    result = command.ExecuteScalar();
+
+                    // commit the transaction and store the changes
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        // log the exception here
+
+                        // attempt to rollback the changes
+                        transaction.Rollback();
+                    }
+                    catch (Exception rollbackEx)
+                    {
+                        // log the exception here
+
+                        // if the rollback fails, then handle it
+                        result = 0;
+                    }
+                    result = 0;
+                }
 
                 connection.Close();
             }
@@ -162,13 +220,42 @@ namespace MsSqlServerHelpers.DataAccess
         {
             int affectedRows = 0;
 
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new(connectionString))
             {
-                var command = StoredProcCommand(connection, $"{schema}.{storedProcedure}", sqlParameters);
+                SqlCommand command = StoredProcCommand(connection, $"{schema}.{storedProcedure}", sqlParameters);
 
                 connection.Open();
 
-                affectedRows = command.ExecuteNonQuery();
+                // create a new transaction on the connection
+                SqlTransaction transaction = connection.BeginTransaction();
+                command.Transaction = transaction;
+
+                try
+                {
+                    // execute the command
+                    affectedRows = command.ExecuteNonQuery();
+
+                    // commit the transaction and store the changes
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        // log the exception here
+
+                        // attempt to rollback the changes
+                        transaction.Rollback();
+                    }
+                    catch (Exception rollbackEx)
+                    {
+                        // log the exception here
+
+                        // if the rollback fails, then handle it
+                        affectedRows = 0;
+                    }
+                    affectedRows = 0;
+                }
 
                 connection.Close();
             }
@@ -194,7 +281,36 @@ namespace MsSqlServerHelpers.DataAccess
 
                 connection.Open();
 
-                affectedRows = command.ExecuteNonQuery();
+                // create a new transaction on the connection
+                SqlTransaction transaction = connection.BeginTransaction();
+                command.Transaction = transaction;
+
+                try
+                {
+                    // execute the command
+                    affectedRows = command.ExecuteNonQuery();
+
+                    // commit the transaction and store the changes
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        // log the exception here
+
+                        // attempt to rollback the changes
+                        transaction.Rollback();
+                    }
+                    catch (Exception rollbackEx)
+                    {
+                        // log the exception here
+
+                        // if the rollback fails, then handle it
+                        affectedRows = 0;
+                    }
+                    affectedRows = 0;
+                }
 
                 connection.Close();
             }
