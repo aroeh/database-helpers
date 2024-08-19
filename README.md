@@ -14,6 +14,9 @@ This is a repo focused around helper classes and libraries for communicating wit
     - Transactions
     - DataReader
     - SQL Adapter DataTable Fill
+- Cosmos DB NoSQL
+    - Generic class for core Cosmos DB Service usage in the project
+    - Create, Read, and Update operations for Cosmos DB
 
 
 # Tools
