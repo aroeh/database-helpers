@@ -7,17 +7,17 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["CosmosDbHelpers.csproj", "CosmosDbHelpers/"]
-RUN dotnet restore "./CosmosDbHelpers/CosmosDbHelpers.csproj"
-COPY . CosmosDbHelpers/
-WORKDIR "/src/CosmosDbHelpers"
-RUN dotnet build "./CosmosDbHelpers.csproj" -c $BUILD_CONFIGURATION -o /app/build
+COPY ["CosmosDbNoSqlHelpers.csproj", "CosmosDbNoSqlHelpers/"]
+RUN dotnet restore "./CosmosDbNoSqlHelpers/CosmosDbNoSqlHelpers.csproj"
+COPY . CosmosDbNoSqlHelpers/
+WORKDIR "/src/CosmosDbNoSqlHelpers"
+RUN dotnet build "./CosmosDbNoSqlHelpers.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./CosmosDbHelpers.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./CosmosDbNoSqlHelpers.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CosmosDbHelpers.dll"]
+ENTRYPOINT ["dotnet", "CosmosDbNoSqlHelpers.dll"]

@@ -1,6 +1,5 @@
 @appJson = application/json
-@apiVersion = v2
-@controllerAddress = {{baseAddress}}/restuarant/{{apiVersion}}
+@controllerAddress = {{baseAddress}}/api/restuarant
 
 
 GET {{controllerAddress}}
@@ -24,7 +23,7 @@ GET {{controllerAddress}}/{{id}}
 
 
 
-POST {{baseAddress}}/restuarant/{{apiVersion}}
+POST {{baseAddress}}/api/restuarant
 Accept: {{appJson}}
 Content-Type: {{appJson}}
 
@@ -45,7 +44,7 @@ Content-Type: {{appJson}}
 
 
 
-PUT {{baseAddress}}/restuarant/{{apiVersion}}
+PUT {{baseAddress}}/api/restuarant
 Accept: {{appJson}}
 Content-Type: {{appJson}}
 

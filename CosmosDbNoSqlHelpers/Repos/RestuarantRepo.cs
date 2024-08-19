@@ -1,7 +1,8 @@
-﻿using DatabaseHelpers.DataAccess;
-using DatabaseHelpers.Models;
+﻿using CosmosDbNoSqlHelpers.DataAccess;
+using CosmosDbNoSqlHelpers.Models;
+using System.Net;
 
-namespace DatabaseHelpers.Repos
+namespace CosmosDbNoSqlHelpers.Repos
 {
     // class setup using a primary constructor
     public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) : IRestuarantRepo
@@ -71,10 +72,10 @@ namespace DatabaseHelpers.Repos
         public async Task<bool> InsertRestuarant(Restuarant rest)
         {
             logger.LogInformation("Adding new restuarant");
-            Restuarant newRestuarant = await restuarantData.InsertRestuarant(rest);
+            HttpStatusCode result = await restuarantData.InsertRestuarant(rest);
 
             logger.LogInformation("Checking insert operation result");
-            return newRestuarant != null && !string.IsNullOrWhiteSpace(newRestuarant.Id);
+            return result == HttpStatusCode.OK || result == HttpStatusCode.Created;
         }
 
         /// <summary>
@@ -85,10 +86,10 @@ namespace DatabaseHelpers.Repos
         public async Task<bool> UpdateRestuarant(Restuarant rest)
         {
             logger.LogInformation("Updating restuarant");
-            MongoUpdateResult result = await restuarantData.UpdateRestuarant(rest);
+            HttpStatusCode result = await restuarantData.UpdateRestuarant(rest);
 
             logger.LogInformation("Checking update operation result");
-            return (result.IsAcknowledged && result.ModifiedCount > 0);
+            return result == HttpStatusCode.OK;
         }
     }
 }

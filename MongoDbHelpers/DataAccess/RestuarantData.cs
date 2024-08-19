@@ -5,10 +5,10 @@ using MongoDbHelpers.Models;
 namespace MongoDbHelpers.DataAccess
 {
     // class setup using a primary constructor
-    public class RestuarantData(ILogger<RestuarantData> log, IMongoService mongo) : IRestuarantData
+    public class RestuarantData(ILogger<RestuarantData> log, IMongoService mongoService) : IRestuarantData
     {
         private readonly ILogger<RestuarantData> logger = log;
-
+        private readonly IMongoService mongo = mongoService;
 
         /// <summary>
         /// Returns a list of all restuarants in the database

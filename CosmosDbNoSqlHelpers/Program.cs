@@ -1,5 +1,5 @@
-using DatabaseHelpers.DataAccess;
-using DatabaseHelpers.Repos;
+using CosmosDbNoSqlHelpers.DataAccess;
+using CosmosDbNoSqlHelpers.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,13 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// TODO: Add services
-
-// Add MongoDB Services for Logic Repo Layer, Data Layer, and Mongo Interface Helper
 builder.Services.AddTransient<IRestuarantRepo, RestuarantRepo>();
 builder.Services.AddTransient<IRestuarantData, RestuarantData>();
-builder.Services.AddTransient<IMongoService, MongoService>();
-// TODO: Add DB Helpers for Mongo, SQL, CosmosDb
+builder.Services.AddTransient<ICosmosDbService, CosmosDbService>();
 
 var app = builder.Build();
 

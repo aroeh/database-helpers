@@ -1,6 +1,7 @@
-﻿using DatabaseHelpers.Models;
+﻿using CosmosDbNoSqlHelpers.Models;
+using System.Net;
 
-namespace DatabaseHelpers.DataAccess
+namespace CosmosDbNoSqlHelpers.DataAccess
 {
     public interface IRestuarantData
     {
@@ -30,14 +31,14 @@ namespace DatabaseHelpers.DataAccess
         /// Inserts a new Restuarant Record
         /// </summary>
         /// <param name="rest"></param>
-        /// <returns>Restuarant object updated with the new id</returns>
-        Task<Restuarant> InsertRestuarant(Restuarant rest);
+        /// <returns>HttpStatusCode</returns>
+        Task<HttpStatusCode> InsertRestuarant(Restuarant rest);
 
         /// <summary>
         /// Updates and existing restuarant record
         /// </summary>
         /// <param name="rest"></param>
-        /// <returns>MongoDb replace results for the update operation</returns>
-        Task<MongoUpdateResult> UpdateRestuarant(Restuarant rest);
+        /// <returns>HttpStatusCode</returns>
+        Task<HttpStatusCode> UpdateRestuarant(Restuarant rest);
     }
 }

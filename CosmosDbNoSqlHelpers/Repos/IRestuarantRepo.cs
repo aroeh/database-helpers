@@ -1,6 +1,6 @@
-﻿using DatabaseHelpers.Models;
+﻿using CosmosDbNoSqlHelpers.Models;
 
-namespace DatabaseHelpers.Repos
+namespace CosmosDbNoSqlHelpers.Repos
 {
     public interface IRestuarantRepo
     {
