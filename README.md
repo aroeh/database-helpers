@@ -51,7 +51,7 @@ Microsoft has a few options for using the Cosmos DB Eumlator, via a Docker Conta
 
 1. Follow instructions to install and setup the emulator [Cosmos DB Emulator Setup](https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-develop-emulator?tabs=windows%2Ccsharp&pivots=api-nosql#import-the-emulators-tlsssl-certificate)
 
-2. Start the emulator and navigate to
+2. Start the emulator and navigate to [https://localhost:8081/_explorer/index.html](https://localhost:8081/_explorer/index.html)
 ```
 https://localhost:8081/_explorer/index.html
 ```
