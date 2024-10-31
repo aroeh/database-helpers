@@ -1,6 +1,11 @@
 USE [Samples]
 GO
 
+
+IF OBJECT_ID('dbo.sp_UpdateRestuarant', 'P') IS NOT NULL  
+   DROP PROCEDURE [dbo].[sp_UpdateRestuarant];  
+GO
+
 CREATE PROCEDURE [dbo].[sp_UpdateRestuarant]
 (
     @Id         INT,
@@ -38,3 +43,4 @@ AS
         -- return the number of impacted rows
         SELECT @@ROWCOUNT
 	END
+GO

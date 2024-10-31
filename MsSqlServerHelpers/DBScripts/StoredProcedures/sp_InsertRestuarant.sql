@@ -1,6 +1,12 @@
 USE [Samples]
 GO
 
+
+IF OBJECT_ID('dbo.sp_InsertRestuarant', 'P') IS NOT NULL  
+   DROP PROCEDURE [dbo].[sp_InsertRestuarant];  
+GO
+
+
 CREATE PROCEDURE [dbo].[sp_InsertRestuarant]
 (
     @Name       NVARCHAR(50),
@@ -30,3 +36,4 @@ AS
         -- return the new resturarant id
         SELECT @newRestuarantId
 	END
+GO

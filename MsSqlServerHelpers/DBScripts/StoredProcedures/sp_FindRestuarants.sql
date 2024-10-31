@@ -1,6 +1,12 @@
 USE [Samples]
 GO
 
+
+IF OBJECT_ID('dbo.sp_FindRestuarants', 'P') IS NOT NULL  
+   DROP PROCEDURE [dbo].[sp_FindRestuarants];  
+GO
+
+
 CREATE PROCEDURE [dbo].[sp_FindRestuarants]
 (
     @Name       NVARCHAR(50),
@@ -25,3 +31,4 @@ AS
         WHERE r.Name LIKE '%' + @Name +'%'
             AND r.CuisineType LIKE '%' + @Cuisine +'%'
 	END
+GO

@@ -1,6 +1,12 @@
 USE [Samples]
 GO
 
+
+IF OBJECT_ID('dbo.sp_GetAllRestuarants', 'P') IS NOT NULL  
+   DROP PROCEDURE [dbo].[sp_GetAllRestuarants];  
+GO
+
+
 CREATE PROCEDURE [dbo].[sp_GetAllRestuarants]
 AS
 	BEGIN
@@ -19,3 +25,4 @@ AS
 			INNER JOIN [dbo].[RestuarantLocation] rl
 				ON rl.RestuarantId = r.Id
 	END
+GO

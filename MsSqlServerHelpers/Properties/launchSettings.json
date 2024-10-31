@@ -6,7 +6,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "MsSqlConn": "Persist Security Info=False;User ID=sa;Password=YourStrong@Passw0rd;Initial Catalog=Samples;Server=localhost;Encrypt=True;TrustServerCertificate=True;"
+        "MsSqlConn": "Persist Security Info=False;User ID=sa;Password=YourStrong@Passw0rd;Initial Catalog=Samples;Server=localhost,1433;Encrypt=True;TrustServerCertificate=True;"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5198"
@@ -17,7 +17,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "MsSqlConn": "Persist Security Info=False;User ID=sa;Password=YourStrong@Passw0rd;Initial Catalog=Samples;Server=localhost;Encrypt=True;TrustServerCertificate=True;"
+        "MsSqlConn": "Persist Security Info=False;User ID=sa;Password=YourStrong@Passw0rd;Initial Catalog=Samples;Server=localhost,1433;Encrypt=True;TrustServerCertificate=True;"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7198;http://localhost:5198"
@@ -28,7 +28,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "MsSqlConn": "Persist Security Info=False;User ID=sa;Password=YourStrong@Passw0rd;Initial Catalog=Samples;Server=localhost;Encrypt=True;TrustServerCertificate=True;"
+        "MsSqlConn": "Persist Security Info=False;User ID=sa;Password=YourStrong@Passw0rd;Initial Catalog=Samples;Server=localhost,1433;Encrypt=True;TrustServerCertificate=True;"
       }
     },
     "Container (Dockerfile)": {
@@ -39,7 +39,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_URLS": "http://+:80",
         "ASPNETCORE_HTTP_PORT": "5197",
-        "MsSqlConn": "Persist Security Info=False;User ID=sa;Password=YourStrong@Passw0rd;Initial Catalog=Samples;Server=localhost;Encrypt=True;TrustServerCertificate=True;"
+        "MsSqlConn": "Persist Security Info=False;User ID=sa;Password=YourStrong@Passw0rd;Initial Catalog=Samples;Server=localhost,1433;Encrypt=True;TrustServerCertificate=True;"
       },
       "publishAllPorts": true,
       "useSSL": true

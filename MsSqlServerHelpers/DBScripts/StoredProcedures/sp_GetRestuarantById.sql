@@ -1,6 +1,12 @@
 USE [Samples]
 GO
 
+
+IF OBJECT_ID('dbo.sp_GetRestuarantById', 'P') IS NOT NULL  
+   DROP PROCEDURE [dbo].[sp_GetRestuarantById];  
+GO
+
+
 CREATE PROCEDURE [dbo].[sp_GetRestuarantById]
 (
     @Id INT
@@ -23,3 +29,4 @@ AS
 				ON rl.RestuarantId = r.Id
         WHERE r.Id = @Id
 	END
+GO

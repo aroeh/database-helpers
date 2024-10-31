@@ -13,7 +13,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IRestuarantRepo, RestuarantRepo>();
 builder.Services.AddTransient<IRestuarantData, RestuarantData>();
 builder.Services.AddTransient<ISqlHelperService, SqlHelperService>();
-builder.Services.AddTransient<ISqlService, SqlService>();
 builder.Services.AddTransient<ISqlRefHelpers, SqlRefHelpers>();
 
 var app = builder.Build();

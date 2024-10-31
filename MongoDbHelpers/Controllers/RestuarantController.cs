@@ -2,108 +2,107 @@
 using MongoDbHelpers.Models;
 using MongoDbHelpers.Repos;
 
-namespace MongoDbHelpers.Controllers
+namespace MongoDbHelpers.Controllers;
+
+/// <summary>
+/// This API has been expanded greatly over the V1 version.
+/// This is just an example of how certain endpoints may be added or altered safely
+/// 
+/// This version demonstrats some simple validation, using IResult and Typed Results,
+/// and OutputCache
+/// </summary>
+[ApiController]
+[Produces("application/json")]
+[Route("api/[controller]")]
+public class RestuarantController(ILogger<RestuarantController> log, IRestuarantRepo repo) : ControllerBase
 {
+    private readonly ILogger<RestuarantController> logger = log;
+    private readonly IRestuarantRepo restuarantRepo = repo;
+
     /// <summary>
-    /// This API has been expanded greatly over the V1 version.
-    /// This is just an example of how certain endpoints may be added or altered safely
-    /// 
-    /// This version demonstrats some simple validation, using IResult and Typed Results,
-    /// and OutputCache
+    /// Get All Restuarants
     /// </summary>
-    [ApiController]
-    [Produces("application/json")]
-    [Route("api/[controller]")]
-    public class RestuarantController(ILogger<RestuarantController> log, IRestuarantRepo repo) : ControllerBase
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IResult> Get()
     {
-        private readonly ILogger<RestuarantController> logger = log;
-        private readonly IRestuarantRepo restuarantRepo = repo;
+        logger.LogInformation("Get all restuarants request received");
+        List<Restuarant> restuarants = await restuarantRepo.GetAllRestuarants();
 
-        /// <summary>
-        /// Get All Restuarants
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IResult> Get()
+        if(restuarants == null || restuarants.Count == 0)
         {
-            logger.LogInformation("Get all restuarants request received");
-            List<Restuarant> restuarants = await restuarantRepo.GetAllRestuarants();
-
-            if(restuarants == null || restuarants.Count == 0)
-            {
-                return TypedResults.NotFound();
-            }
-
-            logger.LogInformation("Get all restuarants request complete...returning results");
-            return TypedResults.Ok(restuarants);
+            return TypedResults.NotFound();
         }
 
-        /// <summary>
-        /// Find Restuarants using matching criteria from query strings
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("find")]
-        public async Task<IResult> Find([FromBody] SearchCriteria search)
+        logger.LogInformation("Get all restuarants request complete...returning results");
+        return TypedResults.Ok(restuarants);
+    }
+
+    /// <summary>
+    /// Find Restuarants using matching criteria from query strings
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("find")]
+    public async Task<IResult> Find([FromBody] SearchCriteria search)
+    {
+        logger.LogInformation("Find restuarants request received");
+        List<Restuarant> restuarants = await restuarantRepo.FindRestuarants(search.Name, search.Cuisine);
+
+        if (restuarants == null || restuarants.Count == 0)
         {
-            logger.LogInformation("Find restuarants request received");
-            List<Restuarant> restuarants = await restuarantRepo.FindRestuarants(search.Name, search.Cuisine);
-
-            if (restuarants == null || restuarants.Count == 0)
-            {
-                return TypedResults.NotFound();
-            }
-
-            logger.LogInformation("Find restuarants request complete...returning results");
-            return TypedResults.Ok(restuarants);
+            return TypedResults.NotFound();
         }
 
-        /// <summary>
-        /// Get a Restuarant using the provided id
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<IResult> Restuarant(string id)
+        logger.LogInformation("Find restuarants request complete...returning results");
+        return TypedResults.Ok(restuarants);
+    }
+
+    /// <summary>
+    /// Get a Restuarant using the provided id
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("{id}")]
+    public async Task<IResult> Restuarant(string id)
+    {
+        logger.LogInformation("Get restuarant request received");
+        Restuarant restuarant = await restuarantRepo.GetRestuarant(id);
+
+        if(restuarant == null || string.IsNullOrWhiteSpace(restuarant.Id))
         {
-            logger.LogInformation("Get restuarant request received");
-            Restuarant restuarant = await restuarantRepo.GetRestuarant(id);
-
-            if(restuarant == null || string.IsNullOrWhiteSpace(restuarant.Id))
-            {
-                return TypedResults.NotFound();
-            }
-
-            logger.LogInformation("Get restuarant request complete...returning results");
-            return TypedResults.Ok(restuarant);
+            return TypedResults.NotFound();
         }
 
-        /// <summary>
-        /// Inserts a new restuarant
-        /// </summary>
-        /// <param name="restuarant"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IResult> Post([FromBody] Restuarant restuarant)
-        {
-            logger.LogInformation("Add restuarant request received");
-            bool success = await restuarantRepo.InsertRestuarant(restuarant);
+        logger.LogInformation("Get restuarant request complete...returning results");
+        return TypedResults.Ok(restuarant);
+    }
 
-            logger.LogInformation("Add restuarant request complete...returning results");
-            return TypedResults.Ok(success);
-        }
+    /// <summary>
+    /// Inserts a new restuarant
+    /// </summary>
+    /// <param name="restuarant"></param>
+    /// <returns></returns>
+    [HttpPost]
+    public async Task<IResult> Post([FromBody] Restuarant restuarant)
+    {
+        logger.LogInformation("Add restuarant request received");
+        bool success = await restuarantRepo.InsertRestuarant(restuarant);
 
-        /// <summary>
-        /// Updates an existing restuarant
-        /// </summary>
-        /// <param name="restuarant"></param>
-        /// <returns></returns>
-        [HttpPut]
-        public async Task<IResult> Put([FromBody] Restuarant restuarant)
-        {
-            logger.LogInformation("Update restuarant request received");
-            bool success = await restuarantRepo.UpdateRestuarant(restuarant);
+        logger.LogInformation("Add restuarant request complete...returning results");
+        return TypedResults.Ok(success);
+    }
 
-            logger.LogInformation("Update restuarant request complete...returning results");
-            return TypedResults.Ok(success);
-        }
+    /// <summary>
+    /// Updates an existing restuarant
+    /// </summary>
+    /// <param name="restuarant"></param>
+    /// <returns></returns>
+    [HttpPut]
+    public async Task<IResult> Put([FromBody] Restuarant restuarant)
+    {
+        logger.LogInformation("Update restuarant request received");
+        bool success = await restuarantRepo.UpdateRestuarant(restuarant);
+
+        logger.LogInformation("Update restuarant request complete...returning results");
+        return TypedResults.Ok(success);
     }
 }

@@ -44,6 +44,8 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=YourStrong@Passw0rd
+      - MSSQL_USER=sa
+      - MSSQL_PID=Developer
   
   mssqlapi:
     image: ${DOCKER_REGISTRY-}mssqlapidemo
