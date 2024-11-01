@@ -57,12 +57,12 @@ internal sealed class MongoService
     /// <param name="collectionName">MongoDb Collection Name</param>
     /// <param name="filter">Expression Filter to match documents</param>
     /// <returns>Task with a value of type T</returns>
-    internal async Task<T> FindOne<T>(string collectionName, FilterDefinition<T> filter)
+    internal Task<T> FindOne<T>(string collectionName, FilterDefinition<T> filter)
     {
         var collection = database.GetCollection<T>(collectionName);
 
         logger.LogInformation("Finding items by Filter");
-        return await collection.Find(filter).FirstOrDefaultAsync();
+        return collection.Find(filter).FirstOrDefaultAsync();
     }
 
     /// <summary>
