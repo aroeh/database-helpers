@@ -3,7 +3,7 @@ using Microsoft.Azure.Cosmos;
 
 namespace CosmosDbNoSqlHelpers.DataAccess;
 
-public class CosmosDbService : ICosmosDbService
+internal sealed class CosmosDbService
 {
     private readonly string endpoint;
     private readonly string primaryKey;
@@ -12,10 +12,10 @@ public class CosmosDbService : ICosmosDbService
     private Database database;
     private Container container;
 
-    public CosmosDbService()
+    internal CosmosDbService()
     {
-        endpoint = Environment.GetEnvironmentVariable(DataAccessConstants.CosmosEndpointUri);
-        primaryKey = Environment.GetEnvironmentVariable(DataAccessConstants.CosmosPrimaryKey);
+        endpoint = Environment.GetEnvironmentVariable(DataAccessConstants.CosmosEndpointUri) ?? string.Empty;
+        primaryKey = Environment.GetEnvironmentVariable(DataAccessConstants.CosmosPrimaryKey) ?? string.Empty;
 
         CosmosClientOptions options = new()
         {
@@ -51,8 +51,8 @@ public class CosmosDbService : ICosmosDbService
     /// </summary>
     /// <typeparam name="T">Generic type of the object to return</typeparam>
     /// <param name="query">CosmosDb query command</param>
-    /// <returns>List <T></returns>
-    public async Task<List<T>> QueryItems<T>(string query)
+    /// <returns>IEnumerable of T</returns>
+    internal async Task<IEnumerable<T>> QueryItems<T>(string query)
     {
         // Create a QueryDefinition
         QueryDefinition queryDefinition = new(query);
@@ -80,15 +80,52 @@ public class CosmosDbService : ICosmosDbService
     }
 
     /// <summary>
+    /// Query for a single item in the container using a query
+    /// </summary>
+    /// <typeparam name="T">Generic type of the object to return</typeparam>
+    /// <param name="query">CosmosDb query command</param>
+    /// <returns>Object of T</returns>
+    internal async Task<T?> QueryItem<T>(string query)
+    {
+        // Call the query items
+        IEnumerable<T> results = await QueryItems<T>(query);
+
+        if(results is null || results.TryGetNonEnumeratedCount(out int count) || count == 0)
+        {
+            return default;
+        }
+
+        return results.FirstOrDefault();
+    }
+
+    /// <summary>
     /// Create a new item in the cosmos db container
     /// </summary>
     /// <typeparam name="T">Generic type of the object to add</typeparam>
-    /// <param name="item">Object to the add</param>
-    /// <returns>ItemResponse<T></returns>
-    public async Task<ItemResponse<T>> CreateItem<T>(T item)
+    /// <param name="item">Object to add</param>
+    /// <returns>ItemResponse of T</returns>
+    internal async Task<ItemResponse<T>> CreateItem<T>(T item)
     {
         ItemResponse<T> response = await container.CreateItemAsync(item);
         return response;
+    }
+
+    /// <summary>
+    /// Create a new item in the cosmos db container
+    /// </summary>
+    /// <typeparam name="T">Generic type of the object to add</typeparam>
+    /// <param name="items">Collection of objects to add</param>
+    /// <returns>ItemResponse of T</returns>
+    internal async Task<IEnumerable<ItemResponse<T>>> CreateItems<T>(IEnumerable<T> items)
+    {
+        List<ItemResponse<T>> results = [];
+        foreach (T item in items)
+        {
+            ItemResponse<T> response = await container.CreateItemAsync(item);
+            results.Add(response);
+        }
+        
+        return results;
     }
 
     /// <summary>
@@ -97,8 +134,8 @@ public class CosmosDbService : ICosmosDbService
     /// <typeparam name="T">Generic type of the object to replace</typeparam>
     /// <param name="item">New version of the object</param>
     /// <param name="id">Unique identifier for the object</param>
-    /// <returns>ItemResponse<T></returns>
-    public async Task<ItemResponse<T>> ReplaceItem<T>(T item, string id)
+    /// <returns>ItemResponse of T</returns>
+    internal async Task<ItemResponse<T>> ReplaceItem<T>(T item, string id)
     {
         ItemResponse<T> replaceResult = await container.ReplaceItemAsync(item, id);
         return replaceResult;

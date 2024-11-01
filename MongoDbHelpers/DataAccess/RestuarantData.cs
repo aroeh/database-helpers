@@ -56,7 +56,7 @@ public class RestuarantData(ILogger<RestuarantData> log, IMongoWrapper mongoServ
     /// <summary>
     /// Inserts a new Restuarant Record
     /// </summary>
-    /// <param name="restuarant"></param>
+    /// <param name="restuarant">Restuarant object to insert</param>
     /// <returns>Restuarant object updated with the new id</returns>
     public async Task<Restuarant> InsertRestuarant(Restuarant restuarant)
     {
@@ -81,7 +81,7 @@ public class RestuarantData(ILogger<RestuarantData> log, IMongoWrapper mongoServ
     /// <summary>
     /// Updates and existing restuarant record
     /// </summary>
-    /// <param name="restuarant"></param>
+    /// <param name="restuarant">Restuarant object to update</param>
     /// <returns>MongoDb replace results for the update operation</returns>
     public async Task<MongoUpdateResult> UpdateRestuarant(Restuarant restuarant)
     {

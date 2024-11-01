@@ -55,7 +55,7 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
         logger.LogInformation("Initiating get restuarant by id");
         Restuarant restuarant = await restuarantData.GetRestuarant(id);
 
-        if (restuarant == null)
+        if (restuarant is null)
         {
             return new Restuarant();
         }
@@ -74,7 +74,7 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
         Restuarant newRestuarant = await restuarantData.InsertRestuarant(restuarant);
 
         logger.LogInformation("Checking insert operation result");
-        return newRestuarant != null && !string.IsNullOrWhiteSpace(newRestuarant.Id);
+        return newRestuarant is not null && !string.IsNullOrWhiteSpace(newRestuarant.Id);
     }
 
     /// <summary>

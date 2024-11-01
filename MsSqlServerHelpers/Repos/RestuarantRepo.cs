@@ -36,8 +36,8 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// <summary>
     /// Retrieves all Restuarant from the database matching search criteria
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="cuisine"></param>
+    /// <param name="name">Search Parameter on the Restuarant Name</param>
+    /// <param name="cuisine">Search Parameter on the Restuarant CuisineType</param>
     /// <returns>Array of Restuarant objects</returns>
     public Task<Restuarant[]> FindRestuarants(string name, string cuisine)
     {
@@ -55,8 +55,8 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// <summary>
     /// Retrieves all Restuarant from the database matching search criteria using a query coded on the API
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="cuisine"></param>
+    /// <param name="name">Search Parameter on the Restuarant Name</param>
+    /// <param name="cuisine">Search Parameter on the Restuarant CuisineType</param>
     /// <returns>Array of Restuarant objects</returns>
     public Task<Restuarant[]> FindRestuarantsUsingQuery(string name, string cuisine)
     {
@@ -69,7 +69,7 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// <summary>
     /// Retrieves a Restuarant from the database by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique Identifier for a restuarant</param>
     /// <returns>Restuarant</returns>
     public Task<Restuarant> GetRestuarant(string id)
     {
@@ -87,12 +87,12 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// <summary>
     /// Inserts a new Restuarant record
     /// </summary>
-    /// <param name="rest"></param>
-    /// <returns>bool indicating the success of the operatoin</returns>
-    public Task<bool> InsertRestuarant(Restuarant rest)
+    /// <param name="restuarant">Restuarant object to insert</param>
+    /// <returns>bool indicating the success of the operation</returns>
+    public Task<bool> InsertRestuarant(Restuarant restuarant)
     {
         logger.LogInformation("Adding new restuarant");
-        int newRestuarantId = restuarantData.InsertRestuarant(rest);
+        int newRestuarantId = restuarantData.InsertRestuarant(restuarant);
 
         logger.LogInformation("Checking insert operation result");
         // we could return the id as part of the result and there are many cases where you might need to do that
@@ -104,7 +104,7 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// Inserts many new Restuarant records
     /// </summary>
     /// <param name="restuarants">Array of new restuarant objects to add</param>
-    /// <returns>bool indicating the success of the operatoin</returns>
+    /// <returns>bool indicating the success of the operation</returns>
     public Task<bool> InsertRestuarants(Restuarant[] restuarants)
     {
         logger.LogInformation("Adding new restuarants");
@@ -157,12 +157,12 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// <summary>
     /// Updates a Restuarant record
     /// </summary>
-    /// <param name="rest"></param>
-    /// <returns>bool indicating the success of the operatoin</returns>
-    public Task<bool> UpdateRestuarant(Restuarant rest)
+    /// <param name="restuarant">Restuarant object to update</param>
+    /// <returns>bool indicating the success of the operation</returns>
+    public Task<bool> UpdateRestuarant(Restuarant restuarant)
     {
         logger.LogInformation("Updating restuarant");
-        int rowsAffected = restuarantData.UpdateRestuarant(rest);
+        int rowsAffected = restuarantData.UpdateRestuarant(restuarant);
 
         logger.LogInformation("Checking update operation result");
         return Task.FromResult(rowsAffected > 0);

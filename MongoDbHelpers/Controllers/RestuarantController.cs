@@ -4,13 +4,6 @@ using MongoDbHelpers.Repos;
 
 namespace MongoDbHelpers.Controllers;
 
-/// <summary>
-/// This API has been expanded greatly over the V1 version.
-/// This is just an example of how certain endpoints may be added or altered safely
-/// 
-/// This version demonstrats some simple validation, using IResult and Typed Results,
-/// and OutputCache
-/// </summary>
 [ApiController]
 [Produces("application/json")]
 [Route("api/[controller]")]
@@ -22,7 +15,7 @@ public class RestuarantController(ILogger<RestuarantController> log, IRestuarant
     /// <summary>
     /// Get All Restuarants
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Task of Typed Results via IResult</returns>
     [HttpGet]
     public async Task<IResult> Get()
     {
@@ -41,7 +34,8 @@ public class RestuarantController(ILogger<RestuarantController> log, IRestuarant
     /// <summary>
     /// Find Restuarants using matching criteria from query strings
     /// </summary>
-    /// <returns></returns>
+    /// <param name="search">Object containing properties for search parameters</param>
+    /// <returns>Task of Typed Results via IResult</returns>
     [HttpPost("find")]
     public async Task<IResult> Find([FromBody] SearchCriteria search)
     {
@@ -60,7 +54,8 @@ public class RestuarantController(ILogger<RestuarantController> log, IRestuarant
     /// <summary>
     /// Get a Restuarant using the provided id
     /// </summary>
-    /// <returns></returns>
+    /// <param name="id">Unique Identifier for a restuarant</param>
+    /// <returns>Task of Typed Results via IResult</returns>
     [HttpGet("{id}")]
     public async Task<IResult> Restuarant(string id)
     {
@@ -79,8 +74,8 @@ public class RestuarantController(ILogger<RestuarantController> log, IRestuarant
     /// <summary>
     /// Inserts a new restuarant
     /// </summary>
-    /// <param name="restuarant"></param>
-    /// <returns></returns>
+    /// <param name="restuarant">Restuarant object to insert</param>
+    /// <returns>Task of Typed Results via IResult</returns>
     [HttpPost]
     public async Task<IResult> Post([FromBody] Restuarant restuarant)
     {
@@ -92,10 +87,10 @@ public class RestuarantController(ILogger<RestuarantController> log, IRestuarant
     }
 
     /// <summary>
-    /// Inserts a new restuarant
+    /// Inserts many new restuarants
     /// </summary>
-    /// <param name="restuarant"></param>
-    /// <returns></returns>
+    /// <param name="restuarants">Restuarant array with many items to insert</param>
+    /// <returns>Task of Typed Results via IResult</returns>
     [HttpPost("bulk")]
     public async Task<IResult> PostMany([FromBody] Restuarant[] restuarants)
     {
@@ -109,8 +104,8 @@ public class RestuarantController(ILogger<RestuarantController> log, IRestuarant
     /// <summary>
     /// Updates an existing restuarant
     /// </summary>
-    /// <param name="restuarant"></param>
-    /// <returns></returns>
+    /// <param name="restuarant">Restuarant object to update</param>
+    /// <returns>Task of Typed Results via IResult</returns>
     [HttpPut]
     public async Task<IResult> Put([FromBody] Restuarant restuarant)
     {

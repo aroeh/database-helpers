@@ -72,8 +72,8 @@ public class RestuarantData(ILogger<RestuarantData> log, ISqlHelperService sql) 
     /// Simple method for finding restuarants by name and type of cuisine.
     /// This could be enhanced to include more criteria like location
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="cuisine"></param>
+    /// <param name="name">Search Parameter on the Restuarant Name</param>
+    /// <param name="cuisine">Search Parameter on the Restuarant CuisineType</param>
     /// <returns>Collection of available restuarant records.  Returns empty array if there are no records found matching criteria</returns>
     public Restuarant[] FindRestuarants(string name, string cuisine)
     {
@@ -102,8 +102,8 @@ public class RestuarantData(ILogger<RestuarantData> log, ISqlHelperService sql) 
     /// Using the stored proc command is the preferred method for security and overall performance
     /// But this method may offer more flexibility if changing the database is difficult
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="cuisine"></param>
+    /// <param name="name">Search Parameter on the Restuarant Name</param>
+    /// <param name="cuisine">Search Parameter on the Restuarant CuisineType</param>
     /// <returns>Collection of available restuarant records.  Returns empty array if there are no records found matching criteria</returns>
     public Restuarant[] FindRestuarantsByStatement(string name, string cuisine)
     {
@@ -145,7 +145,7 @@ public class RestuarantData(ILogger<RestuarantData> log, ISqlHelperService sql) 
     /// <summary>
     /// Retrieves a restuarant record based on the matching id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique Identifier for a restuarant</param>
     /// <returns>Restuarant record if found.  Returns new Restuarant if not found</returns>
     public Restuarant GetRestuarant(string id)
     {
@@ -169,7 +169,7 @@ public class RestuarantData(ILogger<RestuarantData> log, ISqlHelperService sql) 
     /// <summary>
     /// Retrieves a restuarant record based on the matching id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique Identifier for a restuarant</param>
     /// <returns>Restuarant record if found.  Returns new Restuarant if not found</returns>
     public Restuarant GetRestuarantByStatement(string id)
     {
@@ -209,23 +209,23 @@ public class RestuarantData(ILogger<RestuarantData> log, ISqlHelperService sql) 
     /// <summary>
     /// Inserts a new Restuarant Record with Location
     /// </summary>
-    /// <param name="rest">Restuarant object with data to add</param>
+    /// <param name="restuarant">Restuarant object to insert</param>
     /// <returns>id of the newly inserted restuarant</returns>
-    public int InsertRestuarant(Restuarant rest)
+    public int InsertRestuarant(Restuarant restuarant)
     {
         logger.LogInformation("Adding new restuarant");
 
         SqlParameter[] parameters =
         [
-            new("@Name", rest.Name),
-            new("@Cuisine", rest.CuisineType),
-            new("@Website", rest.Website is null ? DBNull.Value : rest.Website.ToString()),
-            new("@Phone", rest.Phone),
-            new("@Street", rest.Address.Street),
-            new("@City", rest.Address.City),
-            new("@State", rest.Address.State),
-            new("@ZipCode", rest.Address.ZipCode),
-            new("@Country", rest.Address.Country)
+            new("@Name", restuarant.Name),
+            new("@Cuisine", restuarant.CuisineType),
+            new("@Website", restuarant.Website is null ? DBNull.Value : restuarant.Website.ToString()),
+            new("@Phone", restuarant.Phone),
+            new("@Street", restuarant.Address.Street),
+            new("@City", restuarant.Address.City),
+            new("@State", restuarant.Address.State),
+            new("@ZipCode", restuarant.Address.ZipCode),
+            new("@Country", restuarant.Address.Country)
         ];
         int newRestuarantId = sqlHelper.InsertOne(DataAccessConstants.DefaultSchema, DataAccessConstants.InsertRestuarant, parameters);
 
@@ -299,23 +299,23 @@ public class RestuarantData(ILogger<RestuarantData> log, ISqlHelperService sql) 
     /// <summary>
     /// Updates and existing restuarant record
     /// </summary>
-    /// <param name="rest"></param>
+    /// <param name="restuarant">Restuarant object to update</param>
     /// <returns>int - number of rows affected</returns>
-    public int UpdateRestuarant(Restuarant rest)
+    public int UpdateRestuarant(Restuarant restuarant)
     {
         logger.LogInformation("replacing restuarant document");
         SqlParameter[] parameters =
         [
-            new("@Id", rest.Id),
-            new("@Name", rest.Name),
-            new("@Cuisine", rest.CuisineType),
-            new("@Website", rest.Website is null ? DBNull.Value : rest.Website.ToString()),
-            new("@Phone", rest.Phone),
-            new("@Street", rest.Address.Street),
-            new("@City", rest.Address.City),
-            new("@State", rest.Address.State),
-            new("@ZipCode", rest.Address.ZipCode),
-            new("@Country", rest.Address.Country),
+            new("@Id", restuarant.Id),
+            new("@Name", restuarant.Name),
+            new("@Cuisine", restuarant.CuisineType),
+            new("@Website", restuarant.Website is null ? DBNull.Value : restuarant.Website.ToString()),
+            new("@Phone", restuarant.Phone),
+            new("@Street", restuarant.Address.Street),
+            new("@City", restuarant.Address.City),
+            new("@State", restuarant.Address.State),
+            new("@ZipCode", restuarant.Address.ZipCode),
+            new("@Country", restuarant.Address.Country),
         ];
         return sqlHelper.Update(DataAccessConstants.DefaultSchema, DataAccessConstants.UpdateRestuarant, parameters);
     }

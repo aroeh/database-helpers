@@ -22,8 +22,8 @@ public interface IRestuarantData
     /// Simple method for finding restuarants by name and type of cuisine.
     /// This could be enhanced to include more criteria like location
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="cuisine"></param>
+    /// <param name="name">Search Parameter on the Restuarant Name</param>
+    /// <param name="cuisine">Search Parameter on the Restuarant CuisineType</param>
     /// <returns>Collection of available restuarant records.  Returns empty array if there are no records found matching criteria</returns>
     Restuarant[] FindRestuarants(string name, string cuisine);
 
@@ -31,31 +31,31 @@ public interface IRestuarantData
     /// Simple method for finding restuarants by name and type of cuisine using a coded query
     /// This could be enhanced to include more criteria like location
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="cuisine"></param>
+    /// <param name="name">Search Parameter on the Restuarant Name</param>
+    /// <param name="cuisine">Search Parameter on the Restuarant CuisineType</param>
     /// <returns>Collection of available restuarant records.  Returns empty array if there are no records found matching criteria</returns>
     Restuarant[] FindRestuarantsByStatement(string name, string cuisine);
 
     /// <summary>
     /// Retrieves a restuarant record based on the matching id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique Identifier for a restuarant</param>
     /// <returns>Restuarant record if found.  Returns new Restuarant if not found</returns>
     Restuarant GetRestuarant(string id);
 
     /// <summary>
     /// Retrieves a restuarant record based on the matching id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique Identifier for a restuarant</param>
     /// <returns>Restuarant record if found.  Returns new Restuarant if not found</returns>
     Restuarant GetRestuarantByStatement(string id);
 
     /// <summary>
     /// Inserts a new Restuarant Record with Location
     /// </summary>
-    /// <param name="rest"></param>
+    /// <param name="restuarant">Restuarant object to insert</param>
     /// <returns>id of the newly inserted restuarant</returns>
-    int InsertRestuarant(Restuarant rest);
+    int InsertRestuarant(Restuarant restuarant);
 
     /// <summary>
     /// Inserts many new Restuarant Records
@@ -74,7 +74,7 @@ public interface IRestuarantData
     /// <summary>
     /// Updates and existing restuarant record
     /// </summary>
-    /// <param name="rest"></param>
+    /// <param name="restuarant">Restuarant object to update</param>
     /// <returns>int - number of rows affected</returns>
-    int UpdateRestuarant(Restuarant rest);
+    int UpdateRestuarant(Restuarant restuarant);
 }

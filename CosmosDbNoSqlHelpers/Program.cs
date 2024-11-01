@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IRestuarantRepo, RestuarantRepo>();
 builder.Services.AddTransient<IRestuarantData, RestuarantData>();
-builder.Services.AddTransient<ICosmosDbService, CosmosDbService>();
+builder.Services.AddTransient<ICosmosWrapper, CosmosWrapper>();
 
 var app = builder.Build();
 
