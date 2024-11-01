@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IRestuarantRepo, RestuarantRepo>();
 builder.Services.AddTransient<IRestuarantData, RestuarantData>();
-builder.Services.AddTransient<IMongoService, MongoService>();
+builder.Services.AddTransient<IMongoWrapper, MongoWrapper>();
 
 var app = builder.Build();
 

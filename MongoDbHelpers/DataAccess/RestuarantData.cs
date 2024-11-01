@@ -5,10 +5,10 @@ using MongoDbHelpers.Models;
 namespace MongoDbHelpers.DataAccess;
 
 // class setup using a primary constructor
-public class RestuarantData(ILogger<RestuarantData> log, IMongoService mongoService) : IRestuarantData
+public class RestuarantData(ILogger<RestuarantData> log, IMongoWrapper mongoService) : IRestuarantData
 {
     private readonly ILogger<RestuarantData> logger = log;
-    private readonly IMongoService mongo = mongoService;
+    private readonly IMongoWrapper mongo = mongoService;
 
     /// <summary>
     /// Returns a list of all restuarants in the database
@@ -64,6 +64,18 @@ public class RestuarantData(ILogger<RestuarantData> log, IMongoService mongoServ
         Restuarant newRestuarant = await mongo.InsertOne<Restuarant>(DataAccessConstants.MongoCollection, rest);
 
         return newRestuarant;
+    }
+
+    /// <summary>
+    /// Inserts many new Restuarant Records
+    /// </summary>
+    /// <param name="restuarants">Array of new restuarant objects to add</param>
+    /// <returns>Restuarant objects updated with the new id</returns>
+    public async Task<Restuarant[]> InsertRestuarants(Restuarant[] restuarants)
+    {
+        logger.LogInformation("Adding new restuarants");
+        IEnumerable<Restuarant> newRestuarants = await mongo.InsertMany<Restuarant>(DataAccessConstants.MongoCollection, restuarants);
+        return newRestuarants.ToArray();
     }
 
     /// <summary>

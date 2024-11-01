@@ -5,7 +5,7 @@ namespace MongoDbHelpers.DataAccess;
 public interface IRestuarantData
 {
     /// <summary>
-    /// Returns a list of all restuarants in the database
+    /// Returns a collection of all restuarants in the database
     /// </summary>
     /// <returns>Collection of available restuarant records.  Returns empty list if there are no records</returns>
     Task<List<Restuarant>> GetAllRestuarants();
@@ -32,6 +32,13 @@ public interface IRestuarantData
     /// <param name="rest"></param>
     /// <returns>Restuarant object updated with the new id</returns>
     Task<Restuarant> InsertRestuarant(Restuarant rest);
+
+    /// <summary>
+    /// Inserts many new Restuarant Records
+    /// </summary>
+    /// <param name="restuarants">Array of new restuarant objects to add</param>
+    /// <returns>Restuarant objects updated with the new id</returns>
+    Task<Restuarant[]> InsertRestuarants(Restuarant[] restuarants);
 
     /// <summary>
     /// Updates and existing restuarant record

@@ -12,13 +12,13 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// <summary>
     /// Retrieves all Restuarant from the database
     /// </summary>
-    /// <returns>List<Restuarant></returns>
+    /// <returns>List of Restuarant objects</returns>
     public async Task<List<Restuarant>> GetAllRestuarants()
     {
         logger.LogInformation("Initiating get all restuarants");
-        List<Restuarant> restuarants = await restuarantData.GetAllRestuarants();
+        List<Restuarant>? restuarants = await restuarantData.GetAllRestuarants();
 
-        if (restuarants == null || restuarants.Count == 0)
+        if (restuarants is null || restuarants.Count == 0)
         {
             return [];
         }
@@ -31,13 +31,13 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// </summary>
     /// <param name="name"></param>
     /// <param name="cuisine"></param>
-    /// <returns>List<Restuarant></returns>
+    /// <returns>List of Restuarant objects</returns>
     public async Task<List<Restuarant>> FindRestuarants(string name, string cuisine)
     {
         logger.LogInformation("Initiating find restuarants");
         List<Restuarant> restuarants = await restuarantData.FindRestuarants(name, cuisine);
 
-        if (restuarants == null || restuarants.Count == 0)
+        if (restuarants is null || restuarants.Count == 0)
         {
             return [];
         }
@@ -66,8 +66,8 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// <summary>
     /// Inserts a new Restuarant record
     /// </summary>
-    /// <param name="rest"></param>
-    /// <returns>bool</returns>
+    /// <param name="rest">Restuarant object to insert</param>
+    /// <returns>Success status of the insert operation</returns>
     public async Task<bool> InsertRestuarant(Restuarant rest)
     {
         logger.LogInformation("Adding new restuarant");
@@ -78,10 +78,26 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     }
 
     /// <summary>
+    /// Inserts a new Restuarant record
+    /// </summary>
+    /// <param name="restuarants">Restuarant array with many items to insert</param>
+    /// <returns>Success status of the insert operation</returns>
+    public async Task<bool> InsertRestuarants(Restuarant[] restuarants)
+    {
+        logger.LogInformation("Adding new restuarant");
+        Restuarant[] newRestuarants = await restuarantData.InsertRestuarants(restuarants);
+
+        logger.LogInformation("Checking insert operation result");
+        return newRestuarants is not null
+            && newRestuarants.Length > 0
+            && newRestuarants.All(r => !string.IsNullOrWhiteSpace(r.Id));
+    }
+
+    /// <summary>
     /// Updates a Restuarant record
     /// </summary>
-    /// <param name="rest"></param>
-    /// <returns>bool</returns>
+    /// <param name="rest">Restuarant object to update</param>
+    /// <returns>Success status of the update operation</returns>
     public async Task<bool> UpdateRestuarant(Restuarant rest)
     {
         logger.LogInformation("Updating restuarant");

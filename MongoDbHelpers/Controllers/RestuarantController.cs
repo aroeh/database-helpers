@@ -29,7 +29,7 @@ public class RestuarantController(ILogger<RestuarantController> log, IRestuarant
         logger.LogInformation("Get all restuarants request received");
         List<Restuarant> restuarants = await restuarantRepo.GetAllRestuarants();
 
-        if(restuarants == null || restuarants.Count == 0)
+        if(restuarants is null || restuarants.Count == 0)
         {
             return TypedResults.NotFound();
         }
@@ -48,7 +48,7 @@ public class RestuarantController(ILogger<RestuarantController> log, IRestuarant
         logger.LogInformation("Find restuarants request received");
         List<Restuarant> restuarants = await restuarantRepo.FindRestuarants(search.Name, search.Cuisine);
 
-        if (restuarants == null || restuarants.Count == 0)
+        if (restuarants is null || restuarants.Count == 0)
         {
             return TypedResults.NotFound();
         }
@@ -67,7 +67,7 @@ public class RestuarantController(ILogger<RestuarantController> log, IRestuarant
         logger.LogInformation("Get restuarant request received");
         Restuarant restuarant = await restuarantRepo.GetRestuarant(id);
 
-        if(restuarant == null || string.IsNullOrWhiteSpace(restuarant.Id))
+        if(restuarant is null || string.IsNullOrWhiteSpace(restuarant.Id))
         {
             return TypedResults.NotFound();
         }
@@ -86,6 +86,21 @@ public class RestuarantController(ILogger<RestuarantController> log, IRestuarant
     {
         logger.LogInformation("Add restuarant request received");
         bool success = await restuarantRepo.InsertRestuarant(restuarant);
+
+        logger.LogInformation("Add restuarant request complete...returning results");
+        return TypedResults.Ok(success);
+    }
+
+    /// <summary>
+    /// Inserts a new restuarant
+    /// </summary>
+    /// <param name="restuarant"></param>
+    /// <returns></returns>
+    [HttpPost("bulk")]
+    public async Task<IResult> PostMany([FromBody] Restuarant[] restuarants)
+    {
+        logger.LogInformation("Add restuarant request received");
+        bool success = await restuarantRepo.InsertRestuarants(restuarants);
 
         logger.LogInformation("Add restuarant request complete...returning results");
         return TypedResults.Ok(success);
