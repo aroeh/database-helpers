@@ -29,8 +29,8 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// <summary>
     /// Retrieves all Restuarant from the database matching search criteria
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="cuisine"></param>
+    /// <param name="name">Search Parameter on the Restuarant Name</param>
+    /// <param name="cuisine">Search Parameter on the Restuarant CuisineType</param>
     /// <returns>List of Restuarant objects</returns>
     public async Task<List<Restuarant>> FindRestuarants(string name, string cuisine)
     {
@@ -48,7 +48,7 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// <summary>
     /// Retrieves a Restuarant from the database by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique Identifier for a restuarant</param>
     /// <returns>Restuarant</returns>
     public async Task<Restuarant> GetRestuarant(string id)
     {
@@ -66,12 +66,12 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// <summary>
     /// Inserts a new Restuarant record
     /// </summary>
-    /// <param name="rest">Restuarant object to insert</param>
+    /// <param name="restuarant">Restuarant object to insert</param>
     /// <returns>Success status of the insert operation</returns>
-    public async Task<bool> InsertRestuarant(Restuarant rest)
+    public async Task<bool> InsertRestuarant(Restuarant restuarant)
     {
         logger.LogInformation("Adding new restuarant");
-        Restuarant newRestuarant = await restuarantData.InsertRestuarant(rest);
+        Restuarant newRestuarant = await restuarantData.InsertRestuarant(restuarant);
 
         logger.LogInformation("Checking insert operation result");
         return newRestuarant != null && !string.IsNullOrWhiteSpace(newRestuarant.Id);
@@ -96,12 +96,12 @@ public class RestuarantRepo(ILogger<RestuarantRepo> log, IRestuarantData data) :
     /// <summary>
     /// Updates a Restuarant record
     /// </summary>
-    /// <param name="rest">Restuarant object to update</param>
+    /// <param name="restuarant">Restuarant object to update</param>
     /// <returns>Success status of the update operation</returns>
-    public async Task<bool> UpdateRestuarant(Restuarant rest)
+    public async Task<bool> UpdateRestuarant(Restuarant restuarant)
     {
         logger.LogInformation("Updating restuarant");
-        MongoUpdateResult result = await restuarantData.UpdateRestuarant(rest);
+        MongoUpdateResult result = await restuarantData.UpdateRestuarant(restuarant);
 
         logger.LogInformation("Checking update operation result");
         return (result.IsAcknowledged && result.ModifiedCount > 0);

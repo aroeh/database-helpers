@@ -27,8 +27,8 @@ public class RestuarantData(ILogger<RestuarantData> log, IMongoWrapper mongoServ
     /// Simple method for finding restuarants by name and type of cuisine.
     /// This could be enhanced to include more criteria like location
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="cuisine"></param>
+    /// <param name="name">Search Parameter on the Restuarant Name</param>
+    /// <param name="cuisine">Search Parameter on the Restuarant CuisineType</param>
     /// <returns>Collection of available restuarant records.  Returns empty list if there are no records found matching criteria</returns>
     public async Task<List<Restuarant>> FindRestuarants(string name, string cuisine)
     {
@@ -42,7 +42,7 @@ public class RestuarantData(ILogger<RestuarantData> log, IMongoWrapper mongoServ
     /// <summary>
     /// Retrieves a restuarant record based on the matching id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique Identifier for a restuarant</param>
     /// <returns>Restuarant record if found.  Returns new Restuarant if not found</returns>
     public async Task<Restuarant> GetRestuarant(string id)
     {
@@ -56,12 +56,12 @@ public class RestuarantData(ILogger<RestuarantData> log, IMongoWrapper mongoServ
     /// <summary>
     /// Inserts a new Restuarant Record
     /// </summary>
-    /// <param name="rest"></param>
+    /// <param name="restuarant"></param>
     /// <returns>Restuarant object updated with the new id</returns>
-    public async Task<Restuarant> InsertRestuarant(Restuarant rest)
+    public async Task<Restuarant> InsertRestuarant(Restuarant restuarant)
     {
         logger.LogInformation("Adding new restuarant");
-        Restuarant newRestuarant = await mongo.InsertOne<Restuarant>(DataAccessConstants.MongoCollection, rest);
+        Restuarant newRestuarant = await mongo.InsertOne<Restuarant>(DataAccessConstants.MongoCollection, restuarant);
 
         return newRestuarant;
     }
@@ -81,14 +81,14 @@ public class RestuarantData(ILogger<RestuarantData> log, IMongoWrapper mongoServ
     /// <summary>
     /// Updates and existing restuarant record
     /// </summary>
-    /// <param name="rest"></param>
+    /// <param name="restuarant"></param>
     /// <returns>MongoDb replace results for the update operation</returns>
-    public async Task<MongoUpdateResult> UpdateRestuarant(Restuarant rest)
+    public async Task<MongoUpdateResult> UpdateRestuarant(Restuarant restuarant)
     {
         FilterDefinitionBuilder<Restuarant> builder = Builders<Restuarant>.Filter;
-        var filter = builder.Eq(d => d.Id, rest.Id);
+        var filter = builder.Eq(d => d.Id, restuarant.Id);
 
         logger.LogInformation("replacing restuarant document");
-        return await mongo.ReplaceOne<Restuarant>(DataAccessConstants.MongoCollection, filter, rest);
+        return await mongo.ReplaceOne<Restuarant>(DataAccessConstants.MongoCollection, filter, restuarant);
     }
 }

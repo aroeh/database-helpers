@@ -13,24 +13,24 @@ public interface IRestuarantRepo
     /// <summary>
     /// Retrieves all Restuarant from the database matching search criteria
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="cuisine"></param>
+    /// <param name="name">Search Parameter on the Restuarant Name</param>
+    /// <param name="cuisine">Search Parameter on the Restuarant CuisineType</param>
     /// <returns>List of Restuarant objects</returns>
     Task<List<Restuarant>> FindRestuarants(string name, string cuisine);
 
     /// <summary>
     /// Retrieves a Restuarant from the database by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique Identifier for a restuarant</param>
     /// <returns>Restuarant</returns>
     Task<Restuarant> GetRestuarant(string id);
 
     /// <summary>
     /// Inserts a new Restuarant record
     /// </summary>
-    /// <param name="rest">Restuarant object to insert</param>
+    /// <param name="restuarant">Restuarant object to insert</param>
     /// <returns>Success status of the insert operation</returns>
-    Task<bool> InsertRestuarant(Restuarant rest);
+    Task<bool> InsertRestuarant(Restuarant restuarant);
 
     /// <summary>
     /// Inserts a new Restuarant record
@@ -42,7 +42,7 @@ public interface IRestuarantRepo
     /// <summary>
     /// Updates a Restuarant record
     /// </summary>
-    /// <param name="rest">Restuarant object to update</param>
+    /// <param name="restuarant">Restuarant object to update</param>
     /// <returns>Success status of the update operation</returns>
-    Task<bool> UpdateRestuarant(Restuarant rest);
+    Task<bool> UpdateRestuarant(Restuarant restuarant);
 }
